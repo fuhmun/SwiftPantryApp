@@ -1,17 +1,20 @@
 //
-//  SwiftPantryAppApp.swift
-//  SwiftPantryApp
+//  SwiftPantryApp.swift
+//  SwiftPantry
 //
 //  Created by Fahad Munawar on 2/15/24.
 //
 
+import Foundation
 import SwiftUI
+import SwiftData
 
 @main
-struct SwiftPantryAppApp: App {
+struct SwiftPantryApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            newHome()
         }
+        .modelContainer(for: [Favorites.self,Ingredients.self])
     }
 }

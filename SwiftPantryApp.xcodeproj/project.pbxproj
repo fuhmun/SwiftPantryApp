@@ -14,6 +14,17 @@
 		160217772B7E65800026308E /* SwiftPantryAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160217762B7E65800026308E /* SwiftPantryAppTests.swift */; };
 		160217812B7E65800026308E /* SwiftPantryAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160217802B7E65800026308E /* SwiftPantryAppUITests.swift */; };
 		160217832B7E65800026308E /* SwiftPantryAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160217822B7E65800026308E /* SwiftPantryAppUITestsLaunchTests.swift */; };
+		160217902B7E660B0026308E /* ClassForRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1602178F2B7E660B0026308E /* ClassForRecipe.swift */; };
+		160217922B7E66240026308E /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160217912B7E66240026308E /* Favorites.swift */; };
+		160217942B7E664A0026308E /* Ingredients.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160217932B7E664A0026308E /* Ingredients.swift */; };
+		160217962B7E66600026308E /* newFavorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160217952B7E66600026308E /* newFavorites.swift */; };
+		160217982B7E667E0026308E /* newFavRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160217972B7E667E0026308E /* newFavRecipe.swift */; };
+		1602179A2B7E66950026308E /* newHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160217992B7E66950026308E /* newHome.swift */; };
+		1602179C2B7E66BE0026308E /* newRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1602179B2B7E66BE0026308E /* newRecipe.swift */; };
+		1602179E2B7E66E10026308E /* OpenAIFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1602179D2B7E66E10026308E /* OpenAIFile.swift */; };
+		160217A12B7E66F80026308E /* Recipes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1602179F2B7E66F40026308E /* Recipes.swift */; };
+		160217A62B7E673B0026308E /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160217A42B7E67370026308E /* TagListView.swift */; };
+		160217A72B7E673D0026308E /* SecretAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160217A22B7E67150026308E /* SecretAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +55,17 @@
 		1602177C2B7E65800026308E /* SwiftPantryAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftPantryAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		160217802B7E65800026308E /* SwiftPantryAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftPantryAppUITests.swift; sourceTree = "<group>"; };
 		160217822B7E65800026308E /* SwiftPantryAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftPantryAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		1602178F2B7E660B0026308E /* ClassForRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassForRecipe.swift; sourceTree = "<group>"; };
+		160217912B7E66240026308E /* Favorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
+		160217932B7E664A0026308E /* Ingredients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredients.swift; sourceTree = "<group>"; };
+		160217952B7E66600026308E /* newFavorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newFavorites.swift; sourceTree = "<group>"; };
+		160217972B7E667E0026308E /* newFavRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newFavRecipe.swift; sourceTree = "<group>"; };
+		160217992B7E66950026308E /* newHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newHome.swift; sourceTree = "<group>"; };
+		1602179B2B7E66BE0026308E /* newRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newRecipe.swift; sourceTree = "<group>"; };
+		1602179D2B7E66E10026308E /* OpenAIFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIFile.swift; sourceTree = "<group>"; };
+		1602179F2B7E66F40026308E /* Recipes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipes.swift; sourceTree = "<group>"; };
+		160217A22B7E67150026308E /* SecretAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretAPI.swift; sourceTree = "<group>"; };
+		160217A42B7E67370026308E /* TagListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +117,17 @@
 			isa = PBXGroup;
 			children = (
 				160217652B7E657F0026308E /* SwiftPantryApp.swift */,
+				160217912B7E66240026308E /* Favorites.swift */,
+				1602179F2B7E66F40026308E /* Recipes.swift */,
+				160217932B7E664A0026308E /* Ingredients.swift */,
+				160217952B7E66600026308E /* newFavorites.swift */,
+				160217972B7E667E0026308E /* newFavRecipe.swift */,
+				160217A22B7E67150026308E /* SecretAPI.swift */,
+				160217992B7E66950026308E /* newHome.swift */,
+				1602179B2B7E66BE0026308E /* newRecipe.swift */,
+				1602179D2B7E66E10026308E /* OpenAIFile.swift */,
+				1602178F2B7E660B0026308E /* ClassForRecipe.swift */,
+				160217A42B7E67370026308E /* TagListView.swift */,
 				160217672B7E657F0026308E /* ContentView.swift */,
 				160217692B7E65800026308E /* Assets.xcassets */,
 				1602176B2B7E65800026308E /* Preview Content */,
@@ -257,8 +290,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				160217962B7E66600026308E /* newFavorites.swift in Sources */,
 				160217682B7E657F0026308E /* ContentView.swift in Sources */,
+				160217902B7E660B0026308E /* ClassForRecipe.swift in Sources */,
+				1602179E2B7E66E10026308E /* OpenAIFile.swift in Sources */,
+				1602179A2B7E66950026308E /* newHome.swift in Sources */,
 				160217662B7E657F0026308E /* SwiftPantryApp.swift in Sources */,
+				160217A12B7E66F80026308E /* Recipes.swift in Sources */,
+				160217A62B7E673B0026308E /* TagListView.swift in Sources */,
+				160217A72B7E673D0026308E /* SecretAPI.swift in Sources */,
+				160217942B7E664A0026308E /* Ingredients.swift in Sources */,
+				160217982B7E667E0026308E /* newFavRecipe.swift in Sources */,
+				1602179C2B7E66BE0026308E /* newRecipe.swift in Sources */,
+				160217922B7E66240026308E /* Favorites.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
