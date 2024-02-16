@@ -10,69 +10,53 @@ import SwiftUI
 import SwiftData
 import CoreData
 
-let mess = "chicken eggs cheese"
-
 var arrayOfRecipes: [Favorites] = []
 
 struct newRecipeView: View {
     
     let recipeInfo: Recipes
     
-    let name2: String
-    let time2: String
-    let ingredients2: String
-    let instructions2: String
-    
     @State private var bookmarkTog = false
     
     @State private var id = UUID()
-//    @State private var name: String = name2
-//    @State private var time: String = ""
-//    @State private var ingredients: String = ""
-//    @State private var instructions: String = ""
-//    @State private var background: slimIcons = .cup
     @State private var information: String = ""
     
-    var name: String {
-        recipeInfo.name
-    }
+    var name: String { recipeInfo.name }
     
-    var time: String {
-        recipeInfo.time
-    }
+    var time: String { recipeInfo.time }
     
-    var instructions: String {
-        recipeInfo.instructions
-    }
+    var instructions: String { recipeInfo.instructions }
     
-    var ingredients: String {
-        recipeInfo.ingredients
-    }
+    var ingredients: String { recipeInfo.ingredients }
     
-    var background: slimIcons {
-        randomSlimIcon()
-    }
+    var background: slimIcons { randomSlimIcon() }
     
-    var recipe: Favorites {
-        Favorites(id: id, name: name2, time: time, information: information, ingredients: ingredients, instructions: instructions, background: background)
-    }
+    var recipe: Favorites { Favorites(id: id, name: name, time: time, information: information, ingredients: ingredients, instructions: instructions, background: background) }
     
     @Environment(\.modelContext) var modelContext
     @Query var savedRecipes: [Favorites]
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
             ZStack{
-                Image("foodBackground")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .ignoresSafeArea()
+                if colorScheme == .light{
+                    Image("lightBackground")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+                } else {
+                    Image("darkBackground")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+                }
                 GeometryReader { geoProx in
                     ScrollView(.vertical) {
                         VStack (alignment: .leading) {
                             ZStack (alignment: .leading){
                                 RoundedRectangle(cornerRadius: 20.0)
                                     .fill(.newBlue)
-//                                    .frame(width:geoProx.size.width, height:geoProx.size.height/4)
                                     .ignoresSafeArea()
                                 VStack(alignment: .leading) {
                                     Spacer(minLength: geoProx.size.height/15)
@@ -111,24 +95,9 @@ struct newRecipeView: View {
                             }
                             VStack (alignment: .leading){
                                 Spacer()
-//                                VStack (alignment: .leading){
-//                                    Text("Description")
-//                                        .font(.title)
-//                                        .padding([.leading, .top])
-//                                    Divider()
-//                                        .overlay(.white)
-//                                    Text(description)
-//                                        .padding([.leading, .bottom, .trailing])
-//                                }
-//                                .foregroundColor(.white)
-//                                .background(
-//                                    RoundedRectangle(cornerRadius: 15.0)
-//                                        .fill(CustomColor.newBlue)
-//                                )
-//                                .padding(.top)
-//                                Spacer()
                                 VStack(alignment: .leading){
                                     Text("Ingredients")
+                                        .foregroundStyle(.primary)
                                         .font(.title)
                                     Divider()
                                     let components = recipe.ingredients.components(separatedBy: " ")
@@ -136,8 +105,12 @@ struct newRecipeView: View {
                                         HStack {
                                             ForEach(components, id: \.self) { ingre in
                                                 Text(ingre)
+                                                    .foregroundStyle(.primary)
                                                     .multilineTextAlignment(.leading)
                                                     .padding(10)
+                                                    .background(RoundedRectangle(cornerRadius: 10)
+                                                        .fill(CustomColor.lightDark)
+                                                    )
                                                     .overlay(
                                                         RoundedRectangle(cornerRadius: 10)
                                                             .stroke(CustomColor.newRed, lineWidth: 2)
@@ -173,19 +146,6 @@ struct newRecipeView: View {
         }
             .toolbarBackground(.newBlue)
     }
-    
-//    func addRecipes() {
-//        let recipe = Favorites()
-//        modelContext.insert(recipe)
-//    }
-//
-//    func deleteRecipes(_ indexSet: IndexSet) {
-//        for index in indexSet {
-//            let recipe = savedRecipes[index]
-//            modelContext.delete(recipe)
-//        }
-//    }
-    
 }
 //#Preview {
 //    newRecipeView()
