@@ -13,7 +13,8 @@ import SwiftData
 struct SwiftPantryApp: App {
     var body: some Scene {
         WindowGroup {
-            newHome()
+//            newHome()
+            SplashScreen()
         }
         .modelContainer(for: [Favorites.self,Ingredients.self])
     }
