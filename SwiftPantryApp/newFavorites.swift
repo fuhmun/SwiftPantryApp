@@ -16,6 +16,8 @@ struct CustomColor {
     static let darkGreen = Color("darkGreen")
     static let newBlue = Color("newBlue")
     static let newRed = Color("newRed")
+    static let lightDark = Color("lightDark")
+    static let text = Color("text")
 }
 
 enum slimIcons: String, Codable {
@@ -56,7 +58,6 @@ func pickSlimIcon(_ icon: slimIcons) -> String {
     case .wine:
         return "slimWineBG"
     }
-    
 }
 
 struct newFavoritesPage: View {
@@ -64,12 +65,21 @@ struct newFavoritesPage: View {
     @Environment(\.modelContext) var modelContext
     @Query var savedRecipes: [Favorites]
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         ZStack {
-            Image("foodBackground")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+            if colorScheme == .light{
+                Image("lightBackground")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+            } else {
+                Image("darkBackground")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+            }
             GeometryReader { geoProx in
                 VStack{
                     VStack{
@@ -88,7 +98,6 @@ struct newFavoritesPage: View {
                         .ignoresSafeArea()
                     }
                     VStack{
-                        //                            NavigationStack {
                         List {
                             ForEach(savedRecipes) { recipe in
                                 NavigationLink{
@@ -105,7 +114,6 @@ struct newFavoritesPage: View {
                                         Spacer()
                                         VStack {
                                             Text(recipe.time)
-//                                            Text("Min.")
                                         }
                                         .font(.custom("SF Pro", size: 15))
                                     }
@@ -125,29 +133,11 @@ struct newFavoritesPage: View {
                         }
                         .environment(\.defaultMinListRowHeight, 25)
                         .scrollContentBackground(.hidden)
-                        //                                .background(Image("foodBackground")
-                        //                                    .resizable()
-                        //                                    .aspectRatio(contentMode: .fill)
-                        //                                    .edgesIgnoringSafeArea(.all))
-                        //                            .toolbar {
-                        //                                Button("Add", action: addSamples)
-                        //                            }
-                        //                            }
                     }
                 }
             }
         }
     }
-    
-    //    func addSamples(){
-    //        let recipe1 = Favorites(name: "Chicken", time: "15", ingredients: "Blah", instructions: "Blah", background: randomSlimIcon())
-    //        let recipe2 = Favorites(name: "Steak", time: "20", ingredients: "Blah", instructions: "Blah", background: randomSlimIcon())
-    //        let recipe3 = Favorites(name: "Sushi", time: "15", ingredients: "Blah", instructions: "Blah", background: randomSlimIcon())
-    //
-    //        modelContext.insert(recipe1)
-    //        modelContext.insert(recipe2)
-    //        modelContext.insert(recipe3)
-    //    }
     
     func deleteRecipes(_ indexSet: IndexSet) {
         for index in indexSet {
@@ -157,7 +147,6 @@ struct newFavoritesPage: View {
     }
     
 }
-
 
 #Preview {
     newFavoritesPage()

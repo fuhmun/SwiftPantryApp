@@ -4,6 +4,7 @@
 //
 //  Created by Cannon Goldsby on 2/7/24.
 //
+
 import Foundation
 import SwiftUI
 import SwiftData
@@ -33,7 +34,6 @@ func randomBigIcon()->bigIcons {
 }
 
 func pickBigIcon(_ icon: bigIcons) -> String {
-    
     switch icon {
     case .cake:
         return "bigCakeBG"
@@ -46,7 +46,6 @@ func pickBigIcon(_ icon: bigIcons) -> String {
     case .wine:
         return "bigWineBG"
     }
-    
 }
 
 struct newHome: View {
@@ -61,16 +60,29 @@ struct newHome: View {
     @Environment(\.modelContext) var modelContext
     @Query var savedIngredients: [Ingredients]
     
+    @FocusState private var isKeyboardUp
+    
     let columns = [GridItem(.fixed(100)), GridItem(.fixed(100)), GridItem(.fixed(100))]
+    
+    @Environment(\.colorScheme) var colorScheme
+    
+//    @StateObject var tagModel = TagListViewModel()
     
     var body: some View {
         NavigationStack{
             GeometryReader { geoProx in
                 ZStack{
-                    Image(.foodBackground)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+                    if colorScheme == .light{
+                        Image("lightBackground")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+                    } else {
+                        Image("darkBackground")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+                    }
                     VStack {
                         ZStack {
                             UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 20, bottomTrailing: 20))
@@ -96,10 +108,12 @@ struct newHome: View {
                                     }
                                 }
                                 .padding(.top, geoProx.size.height/18)
-                                TextField("Ingredient -> Return", text: $search)
+                                TextField("Ingredient -> Return", text: $search, onCommit: {isKeyboardUp = true})
+                                    .focused($isKeyboardUp)
+                                    .foregroundStyle(.primary)
                                     .multilineTextAlignment(.center)
                                     .fontWeight(.bold)
-                                    .background(RoundedRectangle(cornerRadius: 15).fill(.white).frame(width: 321, height: 50))
+                                    .background(RoundedRectangle(cornerRadius: 15).fill(CustomColor.lightDark).frame(width: 321, height: 50))
                                     .frame(width: 321, height: 50)
                                     .cornerRadius(15)
                                     .shadow(radius: 5)
@@ -111,16 +125,49 @@ struct newHome: View {
                                     }
                                 ZStack{
                                     RoundedRectangle(cornerRadius: 20)
-                                        .fill(Color.white)
+                                        .fill(CustomColor.lightDark)
                                         .frame(width: 321, height: 204)
                                         .shadow(radius: 5)
                                         .padding(.top, 3)
                                         .padding(.bottom, 15)
+                                    
+//                                    VStack(alignment: .leading, spacing: 0){
+//                                        ForEach(tagModel.rows, id:\.self) { rows in
+//                                            HStack(spacing: 0) {
+//                                                ForEach(rows){ row in
+//                                                    Text(row.name)
+//                                                        .font(.system(size: 16))
+//                                                        .padding(.leading, 14)
+//                                                        .padding(.trailing, 30)
+//                                                        .padding(.vertical, 8)
+//                                                        .background(
+//                                                            ZStack(alignment: .trailing) {
+//                                                                Capsule()
+//                                                                    .fill(.white)
+//                                                                Button {
+//                                                                    let id = row.id
+//                                                                    try? modelContext.delete(model: Ingredients.self, where: #Predicate<Ingredients> { ingredientID in
+//                                                                        ( id == ingredientID.id)
+//                                                                    })
+//                                                                } label: {
+//                                                                    Label("Delete", systemImage: "x.circle")
+//                                                                        .foregroundStyle(.black)
+//                                                                        .labelStyle(.iconOnly)
+//                                                                }
+//                                                            }
+//                                                        )
+//                                                }
+//                                            }
+//                                            .frame(height: 28)
+//                                        }
+//                                    }
+                                    
                                     VStack {
                                         LazyVGrid(columns: columns, spacing: 20) {
                                             ForEach(savedIngredients, id: \.self) {ingredient in
                                                 HStack (alignment: .top) {
                                                     Text(ingredient.name)
+                                                        .foregroundStyle(.primary)
                                                     Button {
                                                         let id = ingredient.id
                                                         try? modelContext.delete(model: Ingredients.self, where: #Predicate<Ingredients> { ingredientID in
@@ -128,14 +175,15 @@ struct newHome: View {
                                                         })
                                                     } label: {
                                                         Label("Delete", systemImage: "x.circle")
-                                                            .foregroundStyle(.black)
+                                                            .foregroundStyle(CustomColor.text)
                                                             .labelStyle(.iconOnly)
                                                     }
                                                 }
-                                                .background(.white)
+                                                .padding(3)
+                                                .background(CustomColor.lightDark)
                                                 .overlay(
                                                     RoundedRectangle(cornerRadius: 5)
-                                                        .stroke(CustomColor.newBlue, lineWidth: 1.2)
+                                                        .stroke(CustomColor.newRed, lineWidth: 1.2)
                                                 )
                                             }
                                             
@@ -144,6 +192,7 @@ struct newHome: View {
                                     
                                     //                                    TagListView(tags: savedIngredients)
                                     //                                        .frame(width: 316, height: 199)
+                                    
                                 }
                                 Button{
                                     var ingredientsArray: [String] = []
@@ -177,15 +226,15 @@ struct newHome: View {
                         Spacer()
                         if isRecipeHidden {
                             Text("No Recipes Available")
-                                .foregroundStyle(.black)
+                                .foregroundStyle(.primary)
                                 .padding()
                                 .background(RoundedRectangle(cornerRadius: 20)
-                                    .fill(.white)
-                                    .shadow(color: .black,radius: 7)
+                                    .fill(CustomColor.lightDark)
+                                    .shadow(color: .black ,radius: 7)
                                 )
                         } else {
                             NavigationLink{
-                                newRecipeView(recipeInfo: generatedRecipe, name2: generatedRecipe.name, time2: generatedRecipe.time, ingredients2: generatedRecipe.ingredients, instructions2: generatedRecipe.instructions)
+                                newRecipeView(recipeInfo: generatedRecipe)
                             } label: {
                                 ZStack{
                                     Image(pickBigIcon(randomBigIcon()))
@@ -216,6 +265,9 @@ struct newHome: View {
                     }
                 }
                 .ignoresSafeArea()
+                .onTapGesture {
+                    isKeyboardUp = false
+                }
             }
             .ignoresSafeArea(.keyboard, edges: .bottom)
         }

@@ -14,19 +14,27 @@ struct newFavRecipeView: View {
     
     let favRecipe: Favorites
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
             ZStack{
-                Image("foodBackground")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .ignoresSafeArea()
+                if colorScheme == .light{
+                    Image("lightBackground")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+                } else {
+                    Image("darkBackground")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+                }
                 GeometryReader { geoProx in
                     ScrollView(.vertical) {
                         VStack (alignment: .leading) {
                             ZStack (alignment: .leading){
                                 RoundedRectangle(cornerRadius: 20.0)
                                     .fill(.newBlue)
-//                                    .frame(width:geoProx.size.width, height:geoProx.size.height/4)
                                     .ignoresSafeArea()
                                 VStack(alignment: .leading) {
                                     Spacer(minLength: 20)
@@ -46,33 +54,22 @@ struct newFavRecipeView: View {
                             }
                             VStack (alignment: .leading){
                                 Spacer()
-//                                VStack (alignment: .leading){
-//                                    Text("Description")
-//                                        .font(.title)
-//                                        .padding([.leading, .top])
-//                                    Divider()
-//                                        .overlay(.white)
-//                                    Text(description)
-//                                        .padding([.leading, .bottom, .trailing])
-//                                }
-//                                .foregroundColor(.white)
-//                                .background(
-//                                    RoundedRectangle(cornerRadius: 15.0)
-//                                        .fill(CustomColor.newBlue)
-//                                )
-//                                .padding(.top)
-//                                Spacer()
                                 VStack(alignment: .leading){
                                     Text("Ingredients")
                                         .font(.title)
+                                        .foregroundStyle(.primary)
                                     Divider()
                                     let components = favRecipe.ingredients.components(separatedBy: " ")
                                     ScrollView(.horizontal){
                                         HStack {
                                             ForEach(components, id: \.self) { ingre in
                                                 Text(ingre)
+                                                    .foregroundStyle(.primary)
                                                     .multilineTextAlignment(.leading)
                                                     .padding(10)
+                                                    .background(RoundedRectangle(cornerRadius: 10)
+                                                        .fill(CustomColor.lightDark)
+                                                    )
                                                     .overlay(
                                                         RoundedRectangle(cornerRadius: 10)
                                                             .stroke(CustomColor.newRed, lineWidth: 2)
