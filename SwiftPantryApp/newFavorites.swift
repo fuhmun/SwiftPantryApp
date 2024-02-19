@@ -68,6 +68,7 @@ struct newFavoritesPage: View {
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
+        GeometryReader { geoProx in
         ZStack {
             if colorScheme == .light{
                 Image("lightBackground")
@@ -80,7 +81,6 @@ struct newFavoritesPage: View {
                     .aspectRatio(contentMode: .fill)
                     .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             }
-            GeometryReader { geoProx in
                 VStack{
                     VStack{
                         HStack{
@@ -89,7 +89,7 @@ struct newFavoritesPage: View {
                                 .font(.largeTitle)
                             Spacer()
                         }
-                        .padding(.top,geoProx.size.height/8)
+                        .padding(.top,geoProx.size.height/7.5)
                         .padding(.leading,geoProx.size.width/12)
                         .padding(.bottom, geoProx.size.height/30)
                         .background(RoundedRectangle(cornerRadius: 20)

@@ -12,10 +12,10 @@ import SwiftData
 class Ingredients: Identifiable, Hashable {
     var id = UUID()
     var name: String
-    var size: CGFloat = 0
     
     init(id: UUID = UUID(),name: String = "") {
         self.id = id
         self.name = name
     }
+    
 }
