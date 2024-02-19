@@ -17,6 +17,7 @@ struct newFavRecipeView: View {
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
+        GeometryReader { geoProx in
             ZStack{
                 if colorScheme == .light{
                     Image("lightBackground")
@@ -29,7 +30,6 @@ struct newFavRecipeView: View {
                         .aspectRatio(contentMode: .fill)
                         .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
                 }
-                GeometryReader { geoProx in
                     ScrollView(.vertical) {
                         VStack (alignment: .leading) {
                             ZStack (alignment: .leading){
@@ -98,7 +98,7 @@ struct newFavRecipeView: View {
                             }
                             .padding([.leading,.trailing],30)
                         }
-                        Spacer(minLength: 50)
+                        Spacer(minLength: 150)
                     }
                     .ignoresSafeArea()
                 }

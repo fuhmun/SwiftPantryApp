@@ -55,7 +55,6 @@ class OpenAIService {
         
         let jsonData = try JSONEncoder().encode(payload)
         
-        
         urlRequest.httpBody = jsonData
         return urlRequest
     }
