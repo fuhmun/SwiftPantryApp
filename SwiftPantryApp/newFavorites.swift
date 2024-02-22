@@ -64,39 +64,37 @@ struct newFavoritesPage: View {
     
     @Environment(\.modelContext) var modelContext
     @Query var savedRecipes: [Favorites]
-    
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         GeometryReader { geoProx in
-        ZStack {
-            if colorScheme == .light{
-                Image("lightBackground")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-            } else {
-                Image("darkBackground")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-            }
+            ZStack {
+                if colorScheme == .light{
+                    Image("lightBackground")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+                } else {
+                    Image("darkBackground")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+                }
                 VStack{
-                    VStack{
-                        HStack{
-                            Text("Favorites")
-                                .foregroundColor(.white)
-                                .font(.largeTitle)
-                            Spacer()
-                        }
-                        .padding(.top,geoProx.size.height/7.5)
-                        .padding(.leading,geoProx.size.width/12)
-                        .padding(.bottom, geoProx.size.height/30)
-                        .background(RoundedRectangle(cornerRadius: 20)
-                            .fill(CustomColor.newBlue)
-                        )
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(CustomColor.newBlue)
+                        .frame(width: geoProx.size.width/1,height:geoProx.size.height/4)
                         .ignoresSafeArea()
-                    }
+                        .overlay(
+                            HStack (alignment: .bottom){
+                                Text("Favorites")
+                                    .foregroundColor(.white)
+                                    .font(.largeTitle)
+                                    .padding(.leading, geoProx.size.width/12)
+                                    .padding(.top, geoProx.size.height/10)
+                                Spacer()
+                            }
+                        )
                     VStack{
                         List {
                             ForEach(savedRecipes) { recipe in
@@ -114,10 +112,11 @@ struct newFavoritesPage: View {
                                         Spacer()
                                         VStack {
                                             Text(recipe.time)
+                                            Text("Min.")
                                         }
                                         .font(.custom("SF Pro", size: 15))
                                     }
-                                    .frame(width: 320, height: 25)
+                                    .frame(width: geoProx.size.width/1.3, height: geoProx.size.height/12)
                                 }
                             }
                             }
@@ -136,6 +135,7 @@ struct newFavoritesPage: View {
                     }
                 }
             }
+            .ignoresSafeArea()
         }
     }
     

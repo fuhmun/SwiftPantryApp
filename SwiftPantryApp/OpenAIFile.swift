@@ -13,6 +13,7 @@ enum HTTPMethod: String {
 }
 
 class OpenAIService {
+    
     static let shared = OpenAIService()
     
     private init() {}
@@ -32,14 +33,14 @@ class OpenAIService {
         urlRequest.addValue("Bearer \(Secret.key)", forHTTPHeaderField: "Authorization")
         //Body
         //system message being sent to chatgpt before
-        let systemMessage = GPTMessage(role: "system", content: "I want you to act as a recipe generator. I will provide you with a list of ingredients and you will suggest a unique recipe that can be created with them. Number the instructions and be thorough with explaining them with etailes and measurements. I want the recipes to be a maximum of 20 minutes and I want you to give me one detailed  recipe. Keep in mind that I have majority of seasonings and sauces that are within an average household. If the ingredients are entered in spanish translate the instructions for the recipe in spanish. If the ingredients are sent in arabic translate the instructions for the recipe in arabic. If ingredients are in english respond in english.")
+        let systemMessage = GPTMessage(role: "system", content: "I want you to act as a recipe generator. I will provide you with a list of ingredients and you will suggest a unique recipe that can be created with them. Number the instructions and be thorough with explaining them with detailes and measurements. I want the recipes to be a maximum of 20 minutes and I want you to give me one detailed recipe. Keep in mind that I have majority of common seasonings and sauces that are within an average household. If the ingredients are entered in spanish translate the instructions for the recipe in spanish. If the ingredients are sent in arabic translate the instructions for the recipe in arabic. If ingredients are in english respond in english.")
         let userMessage = GPTMessage(role: "user", content: message)
         
         let ingredients = GPTFunctionProperty(type: "string", description: "The available ingredients are \(message). Give me the ingredients seperated by a whitespace, NO commas.")
         let recipe = GPTFunctionProperty(type: "string", description: "The recommended recipe to make.")
         let description = GPTFunctionProperty(type: "string", description: "Here is a detailed description of this recipe.")
-        let instructions = GPTFunctionProperty(type: "string", description: "Here are detialed instructions for this recipe.")
-        let timeToCook = GPTFunctionProperty(type: "string", description: "Here is how long it takes to cook this recipe and give it in minutes. For example: 20 minutes")
+        let instructions = GPTFunctionProperty(type: "string", description: "Here are detialed instructions for this recipe that are numbered for each step.")
+        let timeToCook = GPTFunctionProperty(type: "string", description: "Here is how long it takes to cook this recipe in minutes and give the number only. For example: 20")
 
         let params: [String: GPTFunctionProperty] = [
             "ingredients": ingredients,
@@ -71,12 +72,10 @@ class OpenAIService {
         }
         let response = try JSONDecoder().decode(RecipeResponse.self, from: argData)
         
-                
         return (response)
         
     }
 }
-
 
 //Encoding
 
