@@ -26,6 +26,7 @@
 		160217A62B7E673B0026308E /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160217A42B7E67370026308E /* TagListView.swift */; };
 		160217A72B7E673D0026308E /* SecretAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160217A22B7E67150026308E /* SecretAPI.swift */; };
 		CCB51BA62B7E754500011209 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB51BA52B7E754500011209 /* SplashScreen.swift */; };
+		CCCD920D2B84F7160048FE9E /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCD920C2B84F7160048FE9E /* LoadingScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		160217A22B7E67150026308E /* SecretAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretAPI.swift; sourceTree = "<group>"; };
 		160217A42B7E67370026308E /* TagListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; };
 		CCB51BA52B7E754500011209 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
+		CCCD920C2B84F7160048FE9E /* LoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 				160217992B7E66950026308E /* newHome.swift */,
 				1602179B2B7E66BE0026308E /* newRecipe.swift */,
 				CCB51BA52B7E754500011209 /* SplashScreen.swift */,
+				CCCD920C2B84F7160048FE9E /* LoadingScreen.swift */,
 				1602179D2B7E66E10026308E /* OpenAIFile.swift */,
 				1602178F2B7E660B0026308E /* ClassForRecipe.swift */,
 				160217A42B7E67370026308E /* TagListView.swift */,
@@ -298,6 +301,7 @@
 				CCB51BA62B7E754500011209 /* SplashScreen.swift in Sources */,
 				160217902B7E660B0026308E /* ClassForRecipe.swift in Sources */,
 				1602179E2B7E66E10026308E /* OpenAIFile.swift in Sources */,
+				CCCD920D2B84F7160048FE9E /* LoadingScreen.swift in Sources */,
 				1602179A2B7E66950026308E /* newHome.swift in Sources */,
 				160217662B7E657F0026308E /* SwiftPantryApp.swift in Sources */,
 				160217A12B7E66F80026308E /* Recipes.swift in Sources */,
