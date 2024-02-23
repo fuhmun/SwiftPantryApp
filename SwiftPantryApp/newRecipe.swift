@@ -15,27 +15,17 @@ var arrayOfRecipes: [Favorites] = []
 struct newRecipeView: View {
     
     let recipeInfo: Recipes
-    
     @State private var bookmarkTog = false
-    
     @State private var id = UUID()
     @State private var information: String = ""
-    
     var name: String { recipeInfo.name }
-    
     var time: String { recipeInfo.time }
-    
     var instructions: String { recipeInfo.instructions }
-    
     var ingredients: String { recipeInfo.ingredients }
-    
     var background: slimIcons { randomSlimIcon() }
-    
     var recipe: Favorites { Favorites(id: id, name: name, time: time, information: information, ingredients: ingredients, instructions: instructions, background: background) }
-    
     @Environment(\.modelContext) var modelContext
     @Query var savedRecipes: [Favorites]
-    
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
@@ -52,101 +42,107 @@ struct newRecipeView: View {
                         .aspectRatio(contentMode: .fill)
                         .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
                 }
-                    ScrollView(.vertical) {
-                        VStack (alignment: .leading) {
-                            ZStack (alignment: .leading){
-                                RoundedRectangle(cornerRadius: 20.0)
-                                    .fill(.newBlue)
-                                    .ignoresSafeArea()
-                                VStack(alignment: .leading) {
-                                    Spacer(minLength: geoProx.size.height/15)
-                                    HStack {
-                                        Spacer()
-                                        Button(action: {
-                                            bookmarkTog.toggle()
-                                            if bookmarkTog{
-                                                modelContext.insert(recipe)
-                                            } else {
-                                                let id = recipe.id
-                                                try? modelContext.delete(model: Favorites.self, where: #Predicate<Favorites> { favorites in
-                                                    ( id == favorites.id)
-                                                })
-                                            }
-                                        }, label: {
-                                            Image(systemName: bookmarkTog ?  "heart.fill" : "heart")
-                                                .font(.largeTitle)
-                                                .foregroundStyle(bookmarkTog ? .newRed : .white)
-                                                .frame(alignment: .trailing)
-                                                .padding()
-                                                .foregroundColor(.white)
-                                        })
-                                    }
-                                    .ignoresSafeArea()
-                                    .frame(height:geoProx.size.height/20)
-                                    .padding(.top,15)
-                                    Text(recipeInfo.name)
-                                            .font(.largeTitle)
-                                            .foregroundColor(.white)
-                                    Text("\(recipe.time)")
-                                        .font(.title3)
-                                            .foregroundColor(.white)
-                                }
-                                .padding()
-                            }
-                            VStack (alignment: .leading){
-                                Spacer()
-                                VStack(alignment: .leading){
-                                    Text("Ingredients")
-                                        .foregroundStyle(.primary)
-                                        .font(.title)
-                                    Divider()
-                                    let components = recipe.ingredients.components(separatedBy: " ")
-                                    ScrollView(.horizontal){
-                                        HStack {
-                                            ForEach(components, id: \.self) { ingre in
-                                                Text(ingre)
-                                                    .foregroundStyle(.primary)
-                                                    .multilineTextAlignment(.leading)
-                                                    .padding(10)
-                                                    .background(RoundedRectangle(cornerRadius: 10)
-                                                        .fill(CustomColor.lightDark)
-                                                    )
-                                                    .overlay(
-                                                        RoundedRectangle(cornerRadius: 10)
-                                                            .stroke(CustomColor.newRed, lineWidth: 2)
-                                                    )
-                                            }
-                                            .background(.white)
-                                            .cornerRadius(10)
+                ScrollView(.vertical) {
+                    VStack (alignment: .leading) {
+                        ZStack (alignment: .leading){
+                            RoundedRectangle(cornerRadius: 20.0)
+                                .fill(.newBlue)
+                                .ignoresSafeArea()
+                            VStack(alignment: .leading) {
+                                Spacer(minLength: geoProx.size.height/15)
+                                HStack {
+                                    Spacer()
+                                    Button(action: {
+                                        bookmarkTog.toggle()
+                                        if bookmarkTog{
+                                            modelContext.insert(recipe)
+                                        } else {
+                                            let id = recipe.id
+                                            try? modelContext.delete(model: Favorites.self, where: #Predicate<Favorites> { favorites in
+                                                ( id == favorites.id)
+                                            })
                                         }
+                                    }, label: {
+                                        Image(systemName: bookmarkTog ?  "heart.fill" : "heart")
+                                            .font(.largeTitle)
+                                            .foregroundStyle(bookmarkTog ? .newRed : .white)
+                                            .frame(alignment: .trailing)
+                                            .padding()
+                                            .foregroundColor(.white)
+                                    })
+                                }
+                                .frame(height:geoProx.size.height/20)
+                                .padding(.top, 20)
+                                Text(recipeInfo.name)
+                                    .font(.largeTitle)
+                                    .foregroundColor(.white)
+                                HStack{
+                                    Text("\(recipe.time)")
+                                    Text("Minutes")
+                                }
+                                .font(.title3)
+                                .foregroundColor(.white)
+                            }
+                            .padding()
+                        }
+                        VStack (alignment: .leading){
+                            Spacer()
+                            VStack(alignment: .leading){
+                                Text("Ingredients")
+                                    .foregroundStyle(.primary)
+                                    .font(.title)
+                                Divider()
+                                    .overlay(.primary)
+                                    .frame(height: 1.5)
+                                    .background(.black)
+                                let components = recipe.ingredients.components(separatedBy: " ")
+                                ScrollView(.horizontal){
+                                    HStack {
+                                        ForEach(components, id: \.self) { ingre in
+                                            Text(ingre)
+                                                .foregroundStyle(.primary)
+                                                .multilineTextAlignment(.leading)
+                                                .padding(10)
+                                                .background(RoundedRectangle(cornerRadius: 10)
+                                                    .fill(CustomColor.lightDark)
+                                                )
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 10)
+                                                        .stroke(CustomColor.newRed, lineWidth: 2)
+                                                )
+                                        }
+                                        .background(.white)
+                                        .cornerRadius(10)
                                     }
                                 }
-                                Spacer()
-                                VStack (alignment: .leading){
-                                    Text("Instructions")
-                                        .font(.title)
-                                        .padding([.leading, .top])
-                                    Divider()
-                                    Text(recipe.instructions)
-                                        .padding([.leading, .bottom, .trailing])
-                                }
-                                .foregroundColor(.white)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 15.0)
-                                        .fill(CustomColor.newBlue)
-                                )
-                                .padding(.top)
                             }
-                            .padding([.leading,.trailing],30)
+                            Spacer()
+                            VStack (alignment: .leading){
+                                Text("Instructions")
+                                    .font(.title)
+                                    .padding([.leading, .top])
+                                Divider()
+                                Text(recipe.instructions)
+                                    .padding([.leading, .bottom, .trailing])
+                            }
+                            .foregroundColor(.white)
+                            .background(
+                                RoundedRectangle(cornerRadius: 15.0)
+                                    .fill(CustomColor.newBlue)
+                            )
+                            .padding(.top)
                         }
-                        Spacer(minLength: 150)
+                        .padding([.leading,.trailing],30)
                     }
-                    .ignoresSafeArea()
+                    Spacer(minLength: 50)
                 }
+            }
+            .ignoresSafeArea()
         }
-            .toolbarBackground(.newBlue)
+        .toolbarBackground(.newBlue)
     }
 }
+
 //#Preview {
 //    newRecipeView()
 //}
