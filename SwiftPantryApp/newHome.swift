@@ -52,6 +52,7 @@ struct newHome: View {
     
     @State private var search: String = ""
     @State private var ingredientListed: [String] = []
+    @State private var load: Bool = false
     @State private var generatedRecipe: Recipes = Recipes(name: "", time: "", ingredients: "", instructions: "")
     @State private var isRecipeHidden: Bool = true
     @Environment(\.modelContext) var modelContext
@@ -170,6 +171,9 @@ struct newHome: View {
                                         }
                                         let ingredientString = ingredientsArray.joined(separator: " ")
                                         print(ingredientString)
+//                                        if load {
+//                                            LoadingScreen()
+//                                        }
                                         Task {
                                             do {
                                                 let result = try await OpenAIService.shared.sendPromptToChatGPT(message: ingredientString)
