@@ -49,7 +49,7 @@ struct newRecipeView: View {
                                 .fill(.newBlue)
                                 .ignoresSafeArea()
                             VStack(alignment: .leading) {
-                                Spacer(minLength: geoProx.size.height/15)
+                                Spacer(minLength: 55)
                                 HStack {
                                     Spacer()
                                     Button(action: {
@@ -93,8 +93,6 @@ struct newRecipeView: View {
                                     .font(.title)
                                 Divider()
                                     .overlay(.primary)
-                                    .frame(height: 1.5)
-                                    .background(.black)
                                 let components = recipe.ingredients.components(separatedBy: " ")
                                 ScrollView(.horizontal){
                                     HStack {
@@ -117,11 +115,13 @@ struct newRecipeView: View {
                                 }
                             }
                             Spacer()
-                            VStack (alignment: .leading){
-                                Text("Instructions")
-                                    .font(.title)
-                                    .padding([.leading, .top])
-                                Divider()
+                            VStack(alignment: .leading) {
+                                    Text("Instructions")
+                                        .font(.title)
+                                        .padding([.leading, .top])
+                                        .frame(alignment: .leading)
+                                    Divider()
+                                        .overlay(.white)
                                 Text(recipe.instructions)
                                     .padding([.leading, .bottom, .trailing])
                             }

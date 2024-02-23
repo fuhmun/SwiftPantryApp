@@ -62,8 +62,6 @@ struct newFavRecipeView: View {
                                     .foregroundStyle(.primary)
                                 Divider()
                                     .overlay(.primary)
-                                    .frame(height: 1.5)
-                                    .background(.black)
                                 let components = favRecipe.ingredients.components(separatedBy: " ")
                                 ScrollView(.horizontal){
                                     HStack {
@@ -86,11 +84,14 @@ struct newFavRecipeView: View {
                                 }
                             }
                             Spacer()
-                            VStack (alignment: .leading){
-                                Text("Instructions")
-                                    .font(.title)
-                                    .padding([.leading, .top])
-                                Divider()
+                            VStack(alignment: .leading) {
+                                    Text("Instructions")
+                                        .font(.title)
+                                        .padding(.top)
+                                        .padding(.leading, geoProx.size.width/20)
+                                        .frame(alignment: .leading)
+                                    Divider()
+                                        .overlay(.white)
                                 Text(favRecipe.instructions)
                                     .padding([.leading, .bottom, .trailing])
                             }
