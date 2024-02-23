@@ -62,9 +62,10 @@ struct newHome: View {
     @State private var recipeBackground: bigIcons = .cup
     @State var tags: [Tag] = []
     var fontSize: CGFloat = 16
+    @State private var showingAlert = false
     
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             GeometryReader { geoProx in
                 ZStack{
                     if colorScheme == .light{
@@ -102,8 +103,9 @@ struct newHome: View {
                                         }
                                     }
                                     .padding(.top, geoProx.size.height/18)
-                                    TextField("Type in the ingredients you have here!", text: $search, onCommit: {isKeyboardUp = true})
+                                    TextField("Type ingredient", text: $search, onCommit: {isKeyboardUp = true})
                                         .focused($isKeyboardUp)
+                                        
                                         .foregroundStyle(.primary)
                                         .multilineTextAlignment(.center)
                                         .fontWeight(.bold)
@@ -122,7 +124,7 @@ struct newHome: View {
                                                 tags.append(Tag(name: search, size: size.width, id2: selectedIngredient.id))
                                                 search = ""
                                             }
-                                        }
+                                        }.submitLabel(.done)
                                     ZStack{
                                         RoundedRectangle(cornerRadius: 20)
                                             .fill(CustomColor.lightDark)
@@ -131,32 +133,6 @@ struct newHome: View {
                                             .overlay(
                                                 TagView(tags: $tags)
                                                     .frame(width: geoProx.size.width/1.3, height: geoProx.size.height/4.3)
-                                                //                                                                        VStack {
-                                                //                                                                            LazyVGrid(columns: columns, spacing: 20) {
-                                                //                                                                                ForEach(savedIngredients, id: \.self) {ingredient in
-                                                //                                                                                    HStack (alignment: .top) {
-                                                //                                                                                        Text(ingredient.name)
-                                                //                                                                                            .foregroundStyle(.primary)
-                                                //                                                                                        Button {
-                                                //                                                                                            let id = ingredient.id
-                                                //                                                                                            try? modelContext.delete(model: Ingredients.self, where: #Predicate<Ingredients> { ingredientID in
-                                                //                                                                                                ( id == ingredientID.id)
-                                                //                                                                                            })
-                                                //                                                                                        } label: {
-                                                //                                                                                            Label("Delete", systemImage: "x.circle")
-                                                //                                                                                                .foregroundStyle(CustomColor.text)
-                                                //                                                                                                .labelStyle(.iconOnly)
-                                                //                                                                                        }
-                                                //                                                                                    }
-                                                //                                                                                    .padding(3)
-                                                //                                                                                    .background(CustomColor.lightDark)
-                                                //                                                                                    .overlay(
-                                                //                                                                                        RoundedRectangle(cornerRadius: 5)
-                                                //                                                                                            .stroke(CustomColor.newRed, lineWidth: 1.2)
-                                                //                                                                                    )
-                                                //                                                                                }
-                                                //                                                                            }
-                                                //                                                                        }
                                             )
                                     }
                                     .padding(.top, 3)
@@ -172,6 +148,7 @@ struct newHome: View {
                                         print(ingredientString)
                                         Task {
                                             do {
+                                                generatedRecipe = Recipes(name: "", time: "", ingredients: "", instructions: "")
                                                 let result = try await OpenAIService.shared.sendPromptToChatGPT(message: ingredientString)
                                                 print(result)
                                                 generatedRecipe = Recipes(name: result.recipe, time: result.timeToCook, ingredients: result.ingredients, instructions: result.instructions)
@@ -179,6 +156,7 @@ struct newHome: View {
                                                 print(error.localizedDescription)
                                                 isRecipeHidden = true
                                                 generatedRecipe = Recipes(name: "", time: "", ingredients: "", instructions: "")
+                                                showingAlert = true
                                             }
                                         }
                                         isRecipeHidden = false
@@ -245,6 +223,11 @@ struct newHome: View {
                 }
             }
             .ignoresSafeArea(.keyboard, edges: .bottom)
+        }
+        .alert("An error occured while generating, please try again!", isPresented: $showingAlert){
+            Button("OK", role: .cancel) {
+                showingAlert = false
+            }
         }
         .onAppear {
             tags = savedIngredients.map { ingredient in
