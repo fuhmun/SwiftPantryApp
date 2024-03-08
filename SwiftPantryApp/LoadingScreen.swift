@@ -10,6 +10,7 @@ import Foundation
 
 struct LoadingScreen: View {
     
+    @State var rotate = 0.0
     @State private var jumpNum: CGFloat = 0
     @State var jumpDelay: Double = 0
     
@@ -18,31 +19,54 @@ struct LoadingScreen: View {
             ZStack{
                 VStack{
                     Spacer()
-                    HStack (spacing: geo.size.width / -6) {
+                    HStack (spacing: geo.size.width / -4.25) {
                         Spacer()
-                        Circle()
-                            .frame( height: geo.size.height * 0.06)
-                            .foregroundStyle(CustomColor.newRed)
+                        Image("lemonRed")
+                            .resizable()
+                            .scaledToFit()
+                            .frame( height: geo.size.height * 0.05)
+                            .foregroundStyle(.black)
+                            .rotationEffect(.degrees(rotate))
                             .offset(y: -jumpNum)
                             .animation(Animation.interpolatingSpring(stiffness: 100, damping: 5).repeatForever(autoreverses: true).delay(1.0), value: jumpNum)
                             .onAppear {
                                 self.jump(withDelay: 0)
+                                withAnimation(.linear(duration: 1)
+                                    .repeatForever(autoreverses: false)){
+                                        rotate = 360.0
+                                    }
                             }
-                        Circle()
-                            .frame( height: geo.size.height * 0.06)
-                            .foregroundStyle(CustomColor.newRed)
+                      
+                        Image("lemonRed")
+                            .resizable()
+                            .scaledToFit()
+                            .frame( height: geo.size.height * 0.05)
+                            .foregroundStyle(.black)
+                            .rotationEffect(.degrees(rotate))
                             .offset(y: -jumpNum)
                             .animation(Animation.interpolatingSpring(stiffness: 100, damping: 5).repeatForever(autoreverses: true).delay(0.5), value: jumpNum)
                             .onAppear {
                                 self.jump(withDelay: 0)
+                                withAnimation(.linear(duration: 1)
+                                    .repeatForever(autoreverses: false)){
+                                        rotate = 360.0
+                                    }
                             }
-                        Circle()
-                            .frame( height: geo.size.height * 0.06)
-                            .foregroundStyle(CustomColor.newRed)
+                      
+                        Image("lemonRed")
+                            .resizable()
+                            .scaledToFit()
+                            .frame( height: geo.size.height * 0.05)
+                            .foregroundStyle(.black)
+                            .rotationEffect(.degrees(rotate))
                             .offset(y: -jumpNum)
-                            .animation(Animation.interpolatingSpring(stiffness: 100, damping: 5).repeatForever(autoreverses: true).delay(0), value: jumpNum)
+                            .animation(Animation.interpolatingSpring(stiffness: 100, damping: 5).repeatForever(autoreverses: true).delay(0.0), value: jumpNum)
                             .onAppear {
                                 self.jump(withDelay: 0)
+                                withAnimation(.linear(duration: 1)
+                                    .repeatForever(autoreverses: false)){
+                                        rotate = 360.0
+                                    }
                             }
                         Spacer()
                     }
