@@ -13,7 +13,9 @@ import SwiftData
 struct SwiftPantryApp: App {
     var body: some Scene {
         WindowGroup {
-            SplashScreen()
+//            SplashScreen()
+//            picPreview()
+            Home()
         }
         .modelContainer(for: [Favorites.self,Ingredients.self])
     }

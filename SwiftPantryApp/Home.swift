@@ -1,15 +1,16 @@
 //
-//  SwiftUIView.swift
-//  SwiftPantry Proto
+//  Home.swift
+//  SwiftPantryApp
 //
-//  Created by Cannon Goldsby on 2/7/24.
+//  Created by Alexander Washington on 2/29/24.
 //
 
 import Foundation
 import SwiftUI
 import SwiftData
+import SDWebImageSwiftUI
 
-enum bigIcons: String, Codable {
+enum uncutIcons: String, Codable {
     case cake
     case carrot
     case utensil
@@ -17,7 +18,7 @@ enum bigIcons: String, Codable {
     case wine
 }
 
-func randomBigIcon()->bigIcons {
+func randomUncutIcon()->bigIcons {
     let x = Int.random(in: 1...5)
     switch x {
     case 1:
@@ -33,28 +34,29 @@ func randomBigIcon()->bigIcons {
     }
 }
 
-func pickBigIcon(_ icon: bigIcons) -> String {
+func pickUncutIcon(_ icon: bigIcons) -> String {
     switch icon {
     case .cake:
-        return "bigCakeBG"
+        return "uncutCakeBG"
     case .carrot:
-        return "bigCarrotBG"
+        return "uncutCarrotBG"
     case .utensil:
-        return "bigUtensilBG"
+        return "uncutUtensilBG"
     case .cup:
-        return "bigCupBG"
+        return "uncutCupBG"
     case .wine:
-        return "bigWineBG"
+        return "uncutWineBG"
     }
 }
 
-struct newHome: View {
+struct Home: View {
     
     @State private var search: String = ""
     @State private var ingredientListed: [String] = []
     @State private var load: Bool = false
     @State private var generatedRecipe: Recipes = Recipes(name: "", time: "", ingredients: "", instructions: "")
     @State private var isRecipeHidden: Bool = true
+    @State private var isAvailabilityHidden: Bool = false
     @Environment(\.modelContext) var modelContext
     @Query var savedIngredients: [Ingredients]
     @FocusState private var isKeyboardUp
@@ -64,6 +66,7 @@ struct newHome: View {
     @State var tags: [Tag] = []
     var fontSize: CGFloat = 16
     @State private var showingAlert = false
+    @State var randomImage = UnspalshData(recipeName: "food")
     
     var body: some View {
         NavigationStack {
@@ -139,6 +142,7 @@ struct newHome: View {
                                     .padding(.top, 3)
                                     .padding(.bottom, 15)
                                     Button{
+                                        isAvailabilityHidden = true
                                         isKeyboardUp = false
                                         recipeBackground = randomBigIcon()
                                         var ingredientsArray: [String] = []
@@ -149,21 +153,24 @@ struct newHome: View {
                                         print(ingredientString)
                                         Task {
                                             do {
-                                                generatedRecipe = Recipes(name: "", time: "", ingredients: "", instructions: "")
+                                                generatedRecipe = Recipes(name: "", time: "", ingredients: "", instructions: "", description: "")
                                                 load = true
                                                 let result = try await OpenAIService.shared.sendPromptToChatGPT(message: ingredientString)
                                                 print(result)
-                                                generatedRecipe = Recipes(name: result.recipe, time: result.timeToCook, ingredients: result.ingredients, instructions: result.instructions)
+                                                generatedRecipe = Recipes(name: result.recipe, time: result.timeToCook, ingredients: result.ingredients, instructions: result.instructions, description: result.description)
+                                                randomImage = UnspalshData(recipeName: generatedRecipe.name)
                                                 load = false
+                                                isRecipeHidden = false
                                             } catch {
                                                 print(error.localizedDescription)
                                                 isRecipeHidden = true
-                                                generatedRecipe = Recipes(name: "", time: "", ingredients: "", instructions: "")
+                                                generatedRecipe = Recipes(name: "", time: "", ingredients: "", instructions: "", description: "")
                                                 showingAlert = true
                                                 load = false
+                                                isAvailabilityHidden = false
+                                                randomImage.Image.id = ""
                                             }
                                         }
-                                        isRecipeHidden = false
                                     } label: {
                                         Text("Generate")
                                             .fontWeight(.bold)
@@ -175,7 +182,7 @@ struct newHome: View {
                                 }
                             )
                         VStack {
-                            if isRecipeHidden {
+                            if !isAvailabilityHidden {
                                 Text("No Recipes Available")
                                     .foregroundStyle(.primary)
                                     .padding()
@@ -184,41 +191,17 @@ struct newHome: View {
                                         .shadow(color: .black ,radius: 7)
                                     )
                                     .padding(.top, geoProx.size.height/7)
-                            } else {
+                            }  else if load {
+                                LoadingScreen()
+                            } else if !isRecipeHidden {
+//                                Text("ID: \(randomImage.Image.id)")
                                 NavigationLink{
-                                    newRecipeView(recipeInfo: generatedRecipe)
+                                    Recipe(recipeInfo: generatedRecipe, image: randomImage)
                                 } label: {
-                                    ZStack{
-                                        Image(pickBigIcon(recipeBackground))
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(width: geoProx.size.width/1.25)
-                                            .shadow(color: .black.opacity(0.5), radius: 10)
-                                        VStack{
-                                            Spacer()
-                                            HStack{
-                                                Text(generatedRecipe.name)
-                                                    .font(.title)
-                                                Spacer()
-                                            }
-                                            Spacer()
-                                            HStack{
-                                                Spacer()
-                                                VStack{
-                                                    Text(generatedRecipe.time)
-                                                    Text("Min.")
-                                                }
-                                            }
-                                            Spacer()
-                                        }
-                                        .frame(width: geoProx.size.width/1.5, height: geoProx.size.height/4.5)
-                                        if load {
-                                            LoadingScreen()
-                                        }
-                                    }
-                                    .frame(width: geoProx.size.width/1.5, height: geoProx.size.height/4.5)
+                                    CardView(name: generatedRecipe.name, description: generatedRecipe.description, time: generatedRecipe.time, geoProx: geoProx, image: randomImage)
+                                        .padding(.top, geoProx.size.height/20)
+                                        .shadow(color: .black.opacity(0.5), radius: 10)
                                 }
-                                .padding(.top, geoProx.size.height/12)
                             }
                         }
                         Spacer()
@@ -247,8 +230,72 @@ struct newHome: View {
     }
 }
 
-#Preview {
-    newHome()
+struct CardView: View {
+    
+    let name: String
+    let description: String
+    let time: String
+    var geoProx: GeometryProxy
+    @ObservedObject var image: UnspalshData
+    
+    var body: some View {
+        VStack {
+            VStack (spacing: 0){
+                if (self.image.Image.id != ""){
+                    AnimatedImage(url: URL(string: image.Image.urls["thumb"]!))
+                        .resizable()
+                        .frame(width: geoProx.size.width/1.3, height: geoProx.size.height/5)
+                        .overlay(
+                            LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .center, endPoint: .bottom)
+                        )
+                        .overlay(
+                            Text(name).padding(geoProx.size.height/90).foregroundStyle(.white)
+                            ,alignment: .bottomLeading
+                        )
+                        .clipShape(
+                            UnevenRoundedRectangle(cornerRadii: .init(topLeading: 20, topTrailing: 20))
+                        )
+                } else {
+                    Image("randomBG")
+                        .resizable()
+                        .frame(width: geoProx.size.width/1.3, height: geoProx.size.height/5)
+                        .overlay(
+                            LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .center, endPoint: .bottom)
+                        )
+                        .overlay(
+                            Text(name).padding(geoProx.size.height/90).foregroundStyle(.white)
+                            ,alignment: .bottomLeading
+                        )
+                        .clipShape(
+                            UnevenRoundedRectangle(cornerRadii: .init(topLeading: 20, topTrailing: 20))
+                        )
+                }
+                Image("uncutCupBG")
+                    .resizable()
+                    .frame(width: geoProx.size.width/1.3, height: geoProx.size.height/8)
+                    .overlay(
+                        HStack {
+                            Text(description)
+                                .padding(geoProx.size.height/90)
+                            Spacer()
+                            VStack{
+                                Spacer()
+                                Text(time)
+                                Text("Min.")
+                            }
+                            .padding(geoProx.size.height/80)
+                        }
+                            .foregroundStyle(.white)
+                    )
+                    .clipShape(
+                        UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 20, bottomTrailing: 20))
+                    )
+            }
+        }
+    }
 }
 
-// Technical Depth
+#Preview {
+    Home()
+    //    CardView()
+}
