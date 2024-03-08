@@ -1,20 +1,20 @@
 //
-//  RecipeView.swift
-//  Bagel5
+//  Recipe.swift
+//  SwiftPantryApp
 //
-//  Created by Fahad Munawar on 1/25/24.
+//  Created by Alexander Washington on 2/29/24.
 //
 
 import Foundation
 import SwiftUI
 import SwiftData
 import CoreData
+import SDWebImageSwiftUI
 
-var arrayOfRecipes: [Favorites] = []
-
-struct newRecipeView: View {
+struct Recipe: View {
     
     let recipeInfo: Recipes
+    let image: UnspalshData
     @State private var bookmarkTog = false
     @State private var id = UUID()
     @State private var information: String = ""
@@ -23,7 +23,7 @@ struct newRecipeView: View {
     var instructions: String { recipeInfo.instructions }
     var ingredients: String { recipeInfo.ingredients }
     var background: slimIcons { randomSlimIcon() }
-    var recipe: Favorites { Favorites(id: id, name: name, time: time, information: information, ingredients: ingredients, instructions: instructions, background: background) }
+    var recipe: Favorites { Favorites(id: id, name: name, time: time, information: information, ingredients: ingredients, instructions: instructions, background: background, picURL: image.Image.urls) }
     @Environment(\.modelContext) var modelContext
     @Query var savedRecipes: [Favorites]
     @Environment(\.colorScheme) var colorScheme
@@ -45,46 +45,34 @@ struct newRecipeView: View {
                 ScrollView(.vertical) {
                     VStack (alignment: .leading) {
                         ZStack (alignment: .leading){
-                            RoundedRectangle(cornerRadius: 20.0)
-                                .fill(.newBlue)
+                            AnimatedImage(url: URL(string: image.Image.urls["thumb"]!))
+                                .resizable()
+                                .frame(width: geoProx.size.width, height: geoProx.size.height/2)
                                 .ignoresSafeArea()
-                            VStack(alignment: .leading) {
-                                Spacer(minLength: geoProx.size.height/8)
-//                                HStack {
-//                                    Spacer()
-//                                    Button(action: {
-//                                        bookmarkTog.toggle()
-//                                        if bookmarkTog{
-//                                            modelContext.insert(recipe)
-//                                        } else {
-//                                            let id = recipe.id
-//                                            try? modelContext.delete(model: Favorites.self, where: #Predicate<Favorites> { favorites in
-//                                                ( id == favorites.id)
-//                                            })
-//                                        }
-//                                    }, label: {
-//                                        Image(systemName: bookmarkTog ?  "heart.fill" : "heart")
-//                                            .font(.largeTitle)
-//                                            .foregroundStyle(bookmarkTog ? .newRed : .white)
-//                                            .frame(alignment: .trailing)
-//                                            .padding()
-//                                            .foregroundColor(.white)
-//                                    })
-//                                    .ignoresSafeArea()
-//                                }
-//                                .frame(height:geoProx.size.height/20)
-//                                .padding(.top, 20)
-                                Text(recipeInfo.name)
-                                    .font(.largeTitle)
-                                    .foregroundColor(.white)
-                                HStack{
-                                    Text("\(recipe.time)")
-                                    Text("Minutes")
+                                .shadow(color: .black.opacity(0.5), radius: 10)
+                                .overlay(
+                                    LinearGradient(gradient: Gradient(colors: [.black, .clear]), startPoint: .top, endPoint: .center)
+                                )
+                                .overlay(
+                                    LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .center, endPoint: .bottom)
+                                )
+                                .overlay (alignment: .bottomLeading){
+                                    VStack(alignment: .leading) {
+                                        Text(recipeInfo.name)
+                                            .font(.largeTitle)
+                                            .foregroundColor(.white)
+                                        HStack{
+                                            Text("\(recipe.time)")
+                                            Text("Minutes")
+                                        }
+                                        .font(.title3)
+                                        .foregroundColor(.white)
+                                    }
+                                    .padding()
                                 }
-                                .font(.title3)
-                                .foregroundColor(.white)
-                            }
-                            .padding()
+                                .clipShape(
+                                    UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 20, bottomTrailing: 20))
+                                )
                         }
                         VStack (alignment: .leading){
                             Spacer()
@@ -140,7 +128,7 @@ struct newRecipeView: View {
             }
             .ignoresSafeArea()
         }
-        .toolbarBackground(.newBlue)
+        .toolbarBackground(CustomColor.newBlue.opacity(0.5))
         .toolbar {
             Button(action: {
                 bookmarkTog.toggle()
@@ -163,7 +151,3 @@ struct newRecipeView: View {
         }
     }
 }
-
-//#Preview {
-//    newRecipeView()
-//}
