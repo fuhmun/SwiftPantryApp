@@ -99,7 +99,7 @@ struct newFavoritesPage: View {
                         List {
                             ForEach(savedRecipes) { recipe in
                                 NavigationLink{
-                                    newFavRecipeView(favRecipe: recipe)
+                                    FavRecipeView(favRecipe: recipe)
                                 }
                             label: {
                                 ZStack{

@@ -8,19 +8,15 @@
 import SwiftUI
 import Foundation
 
-
-
 struct LoadingScreen: View {
     
     @State var rotate = 0.0
     @State private var jumpNum: CGFloat = 0
     @State var jumpDelay: Double = 0
     
-                
     var body: some View {
         GeometryReader{ geo in
             ZStack{
-                //                Color.red
                 VStack{
                     Spacer()
                     HStack (spacing: geo.size.width / -4.25) {
@@ -40,6 +36,7 @@ struct LoadingScreen: View {
                                         rotate = 360.0
                                     }
                             }
+                      
                         Image("lemonRed")
                             .resizable()
                             .scaledToFit()
@@ -55,6 +52,7 @@ struct LoadingScreen: View {
                                         rotate = 360.0
                                     }
                             }
+                      
                         Image("lemonRed")
                             .resizable()
                             .scaledToFit()
@@ -78,16 +76,15 @@ struct LoadingScreen: View {
             }
         }
     }
+    
     func jump(withDelay delay: Double) {
             DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                 withAnimation {
-                    jumpNum += 20
+                    jumpNum += 15
                 }
             }
         }
-       
 }
-
 
 #Preview {
     LoadingScreen()
