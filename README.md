@@ -3,6 +3,10 @@
 SwiftPantry that is an that uses AI to generate random recipes based on user input.
 
 ## Screens
+<img width="371" alt="Screenshot 2024-04-04 at 5 59 20 PM" src="https://github.com/fuhmun/SwiftPantryApp/assets/148350908/af302189-2932-4d11-b9aa-309a276aaa3b"> 
+<img width="370" alt="Screenshot 2024-04-04 at 6 00 19 PM" src="https://github.com/fuhmun/SwiftPantryApp/assets/148350908/b41fd947-a035-45c9-a1cd-0c62c64727d1">
+<img width="367" alt="Screenshot 2024-04-04 at 6 00 56 PM" src="https://github.com/fuhmun/SwiftPantryApp/assets/148350908/5e8ba67d-69e5-43ea-8315-257db12cadad">
+<br>
+<img width="370" alt="Screenshot 2024-04-04 at 6 10 01 PM" src="https://github.com/fuhmun/SwiftPantryApp/assets/148350908/e4f24b9b-8f43-401f-9bee-2ec47df3170e">
+<img width="370" alt="Screenshot 2024-04-04 at 6 10 37 PM" src="https://github.com/fuhmun/SwiftPantryApp/assets/148350908/ff54cd4d-cd32-4ed2-bdc8-d3545cded733">
 
-### ![Simulator Screenshot - iPhone 15 Pro - 2024-04-04 at 11 35 45](https://github.com/fuhmun/SwiftPantryApp/assets/148350908/6a5300fb-164a-43ce-ae4c-6f9170288ba3)![Simulator Screenshot - iPhone 15 Pro - 2024-04-04 at 11 36 41](https://github.com/fuhmun/SwiftPantryApp/assets/148350908/b8f99a83-359b-4d98-958b-bd1d63813b10)![Simulator Screenshot - iPhone 15 Pro - 2024-04-04 at 11 36 44](https://github.com/fuhmun/SwiftPantryApp/assets/148350908/65c4810b-48ed-4a61-a059-a0a497cdc8ad)
-### ![Simulator Screenshot - iPhone 15 Pro - 2024-04-04 at 11 36 59](https://github.com/fuhmun/SwiftPantryApp/assets/148350908/b8601b30-a1c0-45fd-965b-18f601ce8a3b)![Simulator Screenshot - iPhone 15 Pro - 2024-04-04 at 11 37 06](https://github.com/fuhmun/SwiftPantryApp/assets/148350908/3b261c55-abbc-4995-8500-21163fa2859b)
