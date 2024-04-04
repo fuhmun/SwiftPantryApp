@@ -8,5 +8,5 @@
 import Foundation
 
 enum Secret {
-    static let key = "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"
+    static let key = "(Insert your API key here)"
 }
