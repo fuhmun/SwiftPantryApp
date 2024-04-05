@@ -1,6 +1,6 @@
 # SwiftPantry
 
-SwiftPantry that is an that uses AI to generate random recipes based on user input.
+SwiftPantry is an that uses AI to generate random recipes based on user input.
 
 ## Screens
 <img width="371" alt="Screenshot 2024-04-04 at 5 59 20 PM" src="https://github.com/fuhmun/SwiftPantryApp/assets/148350908/af302189-2932-4d11-b9aa-309a276aaa3b"> 
