@@ -19,7 +19,7 @@ SwiftPantry that is an that uses AI to generate random recipes based on user inp
 - ChatGPT's API
 - Swift Data
 - Swift UI
-- Picture API
+- Unsplash Picture API
 
 # Process
 
